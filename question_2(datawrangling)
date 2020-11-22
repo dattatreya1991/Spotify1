@@ -1,0 +1,47 @@
+import pandas as pd
+import numpy as np
+from dfply import *
+import matplotlib.pyplot as plt
+
+
+df = pd.read_csv('/Users/dattatreya/Desktop/analytics_assignment_data.csv')
+df['DateTime'] = pd.to_datetime(df['date'])
+df['day'] = df['DateTime'].dt.day
+df['month'] = df['DateTime'].dt.month
+
+df1 = df[['date','num_orders','order_status','total_cbv','month','service']]
+
+df1.replace(regex=['Failed/Timeout'], value='Failed_Timeout', inplace = True)
+df1.replace(regex=['No Driver Found'], value='No_Driver_Found', inplace = True)
+
+a = df1 >> group_by(X.month,X.order_status,X.service) >> summarise(
+sum_orders = X.num_orders.sum() )
+
+print(a.sort_values(by=['month','service','order_status'], ascending=False).head(40))
+
+a1= a >> group_by(X.month,X.service) >> summarise(
+total_orders = X.sum_orders.sum()
+)
+
+a_a1 = pd.merge(a,a1, on=['service','month'], how='left' )
+a_a2 = a_a1 >> mask(X.order_status=='Completed') >> mutate(
+completed_percentage = 100*(X.sum_orders/X.total_orders)
+)
+print(a_a2.head(5))
+plt.plot(a_a2[a_a2['service']=='Go-Food']['month'], a_a2[a_a2['service']=='Go-Food']['completed_percentage'])
+plt.plot(a_a2[a_a2['service']=='Go-Box']['month'], a_a2[a_a2['service']=='Go-Box']['completed_percentage'])
+plt.plot(a_a2[a_a2['service']=='Go-Clean']['month'], a_a2[a_a2['service']=='Go-Clean']['completed_percentage'])
+plt.plot(a_a2[a_a2['service']=='Go-Glam']['month'], a_a2[a_a2['service']=='Go-Glam']['completed_percentage'])
+plt.plot(a_a2[a_a2['service']=='Go-Kilat']['month'], a_a2[a_a2['service']=='Go-Kilat']['completed_percentage'])
+plt.plot(a_a2[a_a2['service']=='Go-Massage']['month'], a_a2[a_a2['service']=='Go-Massage']['completed_percentage'])
+plt.plot(a_a2[a_a2['service']=='Go-Ride']['month'], a_a2[a_a2['service']=='Go-Ride']['completed_percentage'])
+plt.plot(a_a2[a_a2['service']=='Go-Send']['month'], a_a2[a_a2['service']=='Go-Send']['completed_percentage'])
+plt.plot(a_a2[a_a2['service']=='Go-Shop']['month'], a_a2[a_a2['service']=='Go-Shop']['completed_percentage'])
+plt.plot(a_a2[a_a2['service']=='Go-Tix']['month'], a_a2[a_a2['service']=='Go-Tix']['completed_percentage'])
+
+
+a2 = a.pivot(index =['month','service'] ,columns='order_status', values='sum_orders')
+a2.fillna(0, inplace = True)
+
+print(a2.head())
+#a3['total_requests'] = a3['Cancelled','Completed','Failed_Timeout','No_Driver_Found','Other'].sum(axis=1)
