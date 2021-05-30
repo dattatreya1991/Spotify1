@@ -1,8 +1,3 @@
-import pandas as pd
-import numpy as np
-from sklearn.linear_model import LinearRegression
-from sklearn import datasets, linear_model
-
 import math
 
 def solution(lst, X):

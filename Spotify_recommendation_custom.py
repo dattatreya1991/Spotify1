@@ -35,7 +35,7 @@ scope = 'user-library-read playlist-modify-public playlist-read-private'
 
 # https://beta.developer.spotify.com/dashboard/applications/ef60e9f2d37b4913963c7e7e9c572c96
 # https://developer.spotify.com/dashboard/applications/8d3e3934439b444d9baf6fdf25af1302
-redirect_uri='https://beta.developer.spotify.com/dashboard/applications/ef60e9f2d37b4913963c7e7e9c572c96' # Paste your Redirect URI here
+redirect_uri='https://developer.spotify.com/dashboard/applications/8d3e3934439b444d9baf6fdf25af1302' # Paste your Redirect URI here
 
 client_credentials_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
@@ -49,7 +49,7 @@ else:
 
 #1fCOovfyVaAbUiPlqtRF09
 #37i9dQZEVXcLXLKYSmx8AY
-sourcePlaylistID = '1fCOovfyVaAbUiPlqtRF09'
+sourcePlaylistID = '37i9dQZF1E4mNkGoT25Met'
 sourcePlaylist = sp.user_playlist(username, sourcePlaylistID)
 tracks = sourcePlaylist["tracks"]
 songs = tracks["items"]
@@ -95,7 +95,7 @@ X_names_sparse.shape
 
 #playlist_df['ratings']=[10, 9, 9, 10, 8, 6, 8, 4, 3, 5, 7, 5, 5, 8, 8, 7, 8, 8, 10, 8, 10, 8, 4, 4, 4, 10, 10, 9, 8, 8]
 #playlist_df['ratings']=[10, 9, 9, 10, 8, 6, 8, 4, 3, 5, 7, 5, 5, 8, 8, 7, 8, 8, 10, 8, 10, 8, 4, 4, 4, 10, 10, 9, 8, 8, 4]
-playlist_df['ratings']=[10, 9, 9, 10, 8, 6, 8, 4, 3, 5, 7, 5, 5, 8, 8, 7, 8, 8, 10, 8, 10, 8, 4, 4, 4, 10, 10, 9, 8, 8, 4,6,7,8,8,9,9,10,4,8,6]
+playlist_df['ratings']=[10, 9, 9, 10, 8, 6, 8, 4, 3, 5, 7, 5, 5, 8, 8, 7, 8, 8, 10, 8, 10, 8, 4, 4, 4, 10, 10, 9, 8, 8, 4,6,7,8,8,9,9,10,4,8,6,9,8,7,6,8,9,10,9,7]
 playlist_df.head()
 
 
